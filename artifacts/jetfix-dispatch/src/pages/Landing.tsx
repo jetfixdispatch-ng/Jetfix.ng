@@ -16,7 +16,8 @@ import {
   Loader2,
   MessageCircle,
   Users,
-  Handshake
+  Handshake,
+  AlertTriangle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,16 +30,44 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
 
 const WHATSAPP_NUMBER = "2349026115454";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello%2C%20I%20need%20a%20technician%20from%20JetFix%20Dispatch.`;
 
+const SERVICE_LABELS: Record<string, string> = {
+  electrical: "Electrical Repair",
+  generator: "Generator Repair",
+  solar: "Solar / Inverter Service",
+};
+
+const URGENCY_LABELS: Record<string, string> = {
+  normal: "Normal (within the day)",
+  urgent: "Urgent (within 2 hours)",
+  emergency: "Emergency (ASAP)",
+};
+
+const URGENCY_EMOJIS: Record<string, string> = {
+  normal: "🔵",
+  urgent: "🟡",
+  emergency: "🔴",
+};
+
+function generateBookingRef(): string {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let ref = "JFD-";
+  for (let i = 0; i < 6; i++) ref += chars[Math.floor(Math.random() * chars.length)];
+  return ref;
+}
+
 export default function Landing() {
+  const { toast } = useToast();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [locationValue, setLocationValue] = useState("");
   const [locationLoading, setLocationLoading] = useState(false);
   const [serviceType, setServiceType] = useState("electrical");
+  const [urgency, setUrgency] = useState("normal");
   const [issueDescription, setIssueDescription] = useState("");
   const [locationError, setLocationError] = useState("");
   const [suggestions, setSuggestions] = useState<any[]>([]);
@@ -174,6 +203,53 @@ export default function Landing() {
         console.error(err);
       },
       { timeout: 10000 }
+    );
+  };
+
+  const handleDispatch = () => {
+    if (!locationValue.trim()) {
+      setLocationError("Please enter your location before dispatching.");
+      locationInputRef.current?.focus();
+      toast({
+        title: "Location required",
+        description: "Tell us where to send the technician before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setLocationError("");
+
+    const bookingRef = generateBookingRef();
+    const now = new Date();
+    const dateStr = now.toLocaleDateString("en-NG", {
+      weekday: "short", day: "numeric", month: "short", year: "numeric",
+    });
+    const timeStr = now.toLocaleTimeString("en-NG", {
+      hour: "2-digit", minute: "2-digit", hour12: true,
+    });
+
+    const urgencyEmoji = URGENCY_EMOJIS[urgency] || "🔵";
+    const urgencyLabel = URGENCY_LABELS[urgency] || urgency;
+    const serviceLabel = SERVICE_LABELS[serviceType] || serviceType;
+
+    const message = [
+      `🔧 *JetFix Dispatch – New Booking*`,
+      ``,
+      `📋 *Ref:* ${bookingRef}`,
+      `🗓️ *Date:* ${dateStr} at ${timeStr}`,
+      ``,
+      `⚡ *Service:* ${serviceLabel}`,
+      `${urgencyEmoji} *Priority:* ${urgencyLabel}`,
+      `📍 *Location:* ${locationValue.trim()}`,
+      `📝 *Issue:* ${issueDescription.trim() || "Not specified"}`,
+      ``,
+      `Please confirm availability and estimated arrival time.`,
+    ].join("\n");
+
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener,noreferrer"
     );
   };
 
@@ -392,6 +468,20 @@ export default function Landing() {
                   </div>
 
                   <div className="space-y-2">
+                    <label className="text-sm font-medium text-white/80">Priority / Urgency</label>
+                    <Select value={urgency} onValueChange={setUrgency}>
+                      <SelectTrigger className="bg-white/5 border-white/10 h-12 text-white rounded-xl focus:ring-primary/50" data-testid="select-urgency">
+                        <SelectValue placeholder="Select Priority" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#0a0f1e] border-white/10 text-white">
+                        <SelectItem value="normal">🔵 Normal – within the day</SelectItem>
+                        <SelectItem value="urgent">🟡 Urgent – within 2 hours</SelectItem>
+                        <SelectItem value="emergency">🔴 Emergency – ASAP</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
                     <label className="text-sm font-medium text-white/80">Issue Description</label>
                     <Textarea
                       placeholder="E.g. Phase issue, Mikano not starting, inverter showing fault code..."
@@ -402,21 +492,20 @@ export default function Landing() {
                     />
                   </div>
 
-                  <a
-                    href={`https://wa.me/2349026115454?text=${encodeURIComponent(
-                      `Hello JetFix Dispatch, I need a technician!\n\nService: ${
-                        serviceType === "electrical" ? "Electrical Repair" :
-                        serviceType === "generator" ? "Generator Repair" : "Solar / Inverter Service"
-                      }\nLocation: ${locationValue || "Not specified"}\nIssue: ${issueDescription || "Not specified"}`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={handleDispatch}
                     data-testid="button-dispatch-submit"
-                    className="w-full h-12 mt-4 bg-primary hover:bg-primary/90 text-white font-semibold rounded-xl text-base flex items-center justify-center gap-2 transition-all duration-200"
+                    className="w-full h-12 mt-4 bg-primary hover:bg-primary/90 text-white font-semibold rounded-xl text-base flex items-center justify-center gap-2 transition-all duration-200 group"
                   >
-                    Dispatch Technician
-                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                    <MessageCircle className="w-5 h-5" />
+                    Dispatch via WhatsApp
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+
+                  <p className="text-xs text-center text-muted-foreground">
+                    Opens WhatsApp with your booking details pre-filled
+                  </p>
                 </form>
               </div>
             </motion.div>
