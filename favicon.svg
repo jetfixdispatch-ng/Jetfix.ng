@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+  <rect width="640" height="640" fill="#1a3a52"/>
+  <g id="house" transform="translate(160, 80)">
+    <polygon points="80,0 160,80 0,80" fill="#0066cc"/>
+    <rect x="20" y="80" width="120" height="100" fill="#0099ff"/>
+    <rect x="60" y="130" width="40" height="50" fill="#003366"/>
+  </g>
+  <g transform="translate(220, 100)">
+    <rect width="40" height="40" fill="#cccccc"/>
+    <line x1="20" y1="0" x2="20" y2="40" stroke="#666" stroke-width="2"/>
+    <line x1="0" y1="20" x2="40" y2="20" stroke="#666" stroke-width="2"/>
+  </g>
+  <g id="bolt" transform="translate(320, 80)">
+    <polygon points="60,0 100,60 70,60 130,200 40,100 70,100" fill="#ff6600"/>
+  </g>
+  <text x="80" y="300" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="#0099ff">Jet</text>
+  <text x="340" y="300" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="#ff6600">Fix</text>
+  <text x="120" y="360" font-family="Arial, sans-serif" font-size="40" fill="#999999">DISPATCH</text>
+</svg>
