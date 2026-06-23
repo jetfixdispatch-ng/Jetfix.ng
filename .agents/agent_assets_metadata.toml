@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "eQbkfBErKl-GSDR5T5Z96"
+uri = "file://JetFixDispatch-GitHubPages.tar.gz"
+type = "unspecified"
+title = "JetFixDispatch-GitHubPages.tar.gz"

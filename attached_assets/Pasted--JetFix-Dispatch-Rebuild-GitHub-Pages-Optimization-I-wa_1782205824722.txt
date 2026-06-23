@@ -1,0 +1,253 @@
+# JetFix Dispatch – Rebuild & GitHub Pages Optimization
+
+I want you to reconstruct my JetFix Dispatch website exactly as it currently exists while fixing all deployment issues.
+
+## PRIMARY OBJECTIVE
+
+Rebuild the project into a clean, production-ready static website that can be hosted on GitHub Pages without any manual fixes.
+
+Do NOT redesign the website.
+
+Do NOT change the landing page.
+
+Do NOT change the content.
+
+Do NOT change the contact information.
+
+Do NOT change the fonts, colors, spacing, animations, icons, buttons or layout.
+
+The rebuilt website must look identical to the current version.
+
+---
+
+## Project Requirements
+
+Use:
+
+* HTML5
+* CSS3
+* Vanilla JavaScript (or React + Vite if necessary)
+
+The final production build must generate:
+
+```
+index.html
+404.html
+assets/
+images/
+favicon.svg
+robots.txt
+```
+
+The website must run correctly simply by opening index.html or uploading the files to GitHub Pages.
+
+---
+
+## GitHub Pages Compatibility
+
+Configure everything specifically for GitHub Pages.
+
+Requirements:
+
+* All CSS, JS and image paths must be relative.
+* Never use absolute paths beginning with "/".
+* Every asset must load correctly from a repository subfolder.
+* No broken images.
+* No broken CSS.
+* No broken JavaScript.
+* No 404 errors.
+
+If Vite is used:
+
+Configure:
+
+```ts
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  base: "./"
+});
+```
+
+---
+
+## Logo Fix
+
+The previous project had logo loading issues.
+
+Fix them permanently.
+
+Both logos must display correctly on:
+
+* Local machine
+* GitHub Pages
+* Custom domains
+
+Do not reference images using:
+
+```
+/jetfix-logo.png
+```
+
+Instead use relative paths that work everywhere.
+
+Ensure these files exist:
+
+```
+jetfix-logo.png
+jetfix-logo-full.png
+```
+
+or
+
+```
+assets/images/jetfix-logo.png
+assets/images/jetfix-logo-full.png
+```
+
+Update every reference accordingly.
+
+---
+
+## Asset Organization
+
+Create:
+
+```
+assets/
+    css/
+    js/
+    images/
+    fonts/
+```
+
+Move every asset into the correct folder.
+
+Update every reference.
+
+No broken paths.
+
+---
+
+## Index Page
+
+Generate a clean production-ready
+
+```
+index.html
+```
+
+that references all assets using relative paths.
+
+---
+
+## 404 Support
+
+Generate
+
+```
+404.html
+```
+
+for GitHub Pages.
+
+If React Router is used:
+
+* Use HashRouter
+
+OR
+
+configure routing so refreshing pages never produces a 404.
+
+---
+
+## SEO
+
+Include:
+
+* title
+* meta description
+* Open Graph tags
+* favicon
+* robots.txt
+
+---
+
+## Performance
+
+* Compress images
+* Lazy-load images where appropriate
+* Minify CSS and JS
+* Remove unused code
+* No console errors
+* No warnings
+* No missing resources
+
+---
+
+## Build Output
+
+Generate a folder named
+
+```
+github-pages
+```
+
+containing only:
+
+```
+index.html
+404.html
+assets/
+favicon.svg
+robots.txt
+jetfix-logo.png
+jetfix-logo-full.png
+opengraph.jpg
+```
+
+Everything inside this folder must be ready to upload directly into a GitHub repository.
+
+---
+
+## Verification Checklist
+
+Before finishing, verify:
+
+✓ No 404 errors
+
+✓ No missing CSS
+
+✓ No missing JavaScript
+
+✓ No missing logos
+
+✓ No missing images
+
+✓ All navigation works
+
+✓ All buttons work
+
+✓ Contact information is unchanged
+
+✓ Landing page is identical
+
+✓ Mobile responsive
+
+✓ Desktop responsive
+
+✓ GitHub Pages compatible
+
+✓ Works with a custom domain
+
+---
+
+Do not stop until every item above passes successfully.
+
+Return the completed production-ready project in a folder named:
+
+```
+JetFixDispatch-GitHubPages
+```
+
+ready to download and upload directly to GitHub.
