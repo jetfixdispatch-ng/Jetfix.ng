@@ -6,3 +6,9 @@ id = "eQbkfBErKl-GSDR5T5Z96"
 uri = "file://JetFixDispatch-GitHubPages.tar.gz"
 type = "unspecified"
 title = "JetFixDispatch-GitHubPages.tar.gz"
+
+[[outputs]]
+id = "3nymc-hlFhUwSLj-I3pVj"
+uri = "file://github-actions-setup.tar.gz"
+type = "unspecified"
+title = "github-actions-setup.tar.gz"
